@@ -81,6 +81,7 @@ export default function Login() {
         </TouchableOpacity>
 
         <Text style={styles.ayuda}>Usuario de prueba: cliente / 1234</Text>
+        <Text style={styles.ayuda}>Usuario de prueba: admin / admin123</Text>
       </View>
     </KeyboardAvoidingView>
   );
