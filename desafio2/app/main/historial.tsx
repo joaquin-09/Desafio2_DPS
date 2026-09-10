@@ -3,8 +3,10 @@ import { View, Text, FlatList, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from 'expo-router';
 import { OrdenHistorial } from '../../src/types';
+import { useAuth } from '../../src/context/AuthContext';
 
 export default function Historial() {
+  const { usuarioActual } = useAuth();
   const [ordenes, setOrdenes] = useState<OrdenHistorial[]>([]);
 
   // Recarga el historial cada vez que la pestaña gana el foco,
@@ -18,8 +20,10 @@ export default function Historial() {
   const cargarHistorial = async () => {
     const raw = await AsyncStorage.getItem('historial_ordenes');
     const historial: OrdenHistorial[] = raw ? JSON.parse(raw) : [];
+    // Cada usuario solo ve sus propias órdenes.
+    const misOrdenes = historial.filter((o) => o.usuario === usuarioActual);
     // Ya se guardan del más reciente al más antiguo (prepend al confirmar).
-    setOrdenes(historial);
+    setOrdenes(misOrdenes);
   };
 
   const formatearFecha = (iso: string): string =>
