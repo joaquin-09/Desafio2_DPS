@@ -6,7 +6,7 @@ export default function RootLayout() {
     <OrdenProvider>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
-        <Stack.Screen name="(main)" />
+        <Stack.Screen name="main" />
       </Stack>
     </OrdenProvider>
   );
