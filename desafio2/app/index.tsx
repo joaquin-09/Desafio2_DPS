@@ -34,7 +34,7 @@ export default function Login() {
     }
 
     setError('');
-    router.replace('/(main)/catalogo');
+    router.replace('/main/catalogo');
   };
 
   return (
