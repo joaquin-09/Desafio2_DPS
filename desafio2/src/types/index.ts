@@ -22,6 +22,7 @@ export interface ItemHistorial {
 export interface OrdenHistorial {
   id: string;
   fecha: string; // ISO 8601
+  usuario: string; // usuario dueño de la orden, para filtrar el historial por sesión
   items: ItemHistorial[];
   subtotal: number;
   iva: number;
