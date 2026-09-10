@@ -15,7 +15,7 @@ const USUARIOS_VALIDOS = [
 
 export default function Login() {
   const router = useRouter();
-  const { iniciarSesion } = useAuth();
+  const { iniciarSesion: guardarUsuarioSesion } = useAuth();
   const [usuario, setUsuario] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -36,7 +36,7 @@ export default function Login() {
     }
 
     setError('');
-    iniciarSesion(encontrado.usuario);
+    guardarUsuarioSesion(encontrado.usuario);
     router.replace('/main/catalogo');
   };
 
