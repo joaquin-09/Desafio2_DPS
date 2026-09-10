@@ -3,12 +3,14 @@ import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import { useOrden } from '../../src/context/OrdenContext';
+import { useAuth } from '../../src/context/AuthContext';
 import { IVA_PORCENTAJE } from '../../src/data/productos';
 import { ItemHistorial, OrdenHistorial } from '../../src/types';
 
 export default function Orden() {
   const router = useRouter();
   const { items, eliminarProducto, limpiarOrden } = useOrden();
+  const { usuarioActual } = useAuth();
   const [error, setError] = useState('');
 
   const subtotalGeneral = items.reduce((acc, it) => acc + it.producto.precio * it.cantidad, 0);
@@ -26,6 +28,11 @@ export default function Orden() {
       {
         text: 'Confirmar',
         onPress: async () => {
+          if (!usuarioActual) {
+            router.replace('/');
+            return;
+          }
+
           const itemsHistorial: ItemHistorial[] = items.map((it) => ({
             nombre: it.producto.nombre,
             cantidad: it.cantidad,
@@ -35,6 +42,7 @@ export default function Orden() {
           const nuevaOrden: OrdenHistorial = {
             id: Date.now().toString(),
             fecha: new Date().toISOString(),
+            usuario: usuarioActual,
             items: itemsHistorial,
             subtotal: subtotalGeneral,
             iva,
