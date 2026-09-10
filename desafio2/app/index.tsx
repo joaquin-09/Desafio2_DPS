@@ -5,6 +5,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet,
   Image,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useAuth } from '../src/context/AuthContext';
 
 // Usuario y contraseña definidos en variables locales
 const USUARIOS_VALIDOS = [
@@ -14,6 +15,7 @@ const USUARIOS_VALIDOS = [
 
 export default function Login() {
   const router = useRouter();
+  const { iniciarSesion } = useAuth();
   const [usuario, setUsuario] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -34,6 +36,7 @@ export default function Login() {
     }
 
     setError('');
+    iniciarSesion(encontrado.usuario);
     router.replace('/main/catalogo');
   };
 
